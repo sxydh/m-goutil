@@ -5,6 +5,15 @@ import (
 )
 
 func TestGetFreePort(t *testing.T) {
+	got, err := GetFreePort()
+	if err != nil {
+		t.Fatalf("GetFreePort() failed: %v", err)
+	} else {
+		t.Logf("GetFreePortInRange() = %d", got)
+	}
+}
+
+func TestGetFreePortInRange(t *testing.T) {
 	tests := []struct {
 		name  string
 		start int
@@ -18,11 +27,11 @@ func TestGetFreePort(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got, err := GetFreePort(tt.start, tt.end)
+			got, err := GetFreePortInRange(tt.start, tt.end)
 			if err != nil {
-				t.Logf("GetFreePort(%d, %d) failed: %v", tt.start, tt.end, err)
+				t.Errorf("GetFreePortInRange(%d, %d) failed: %v", tt.start, tt.end, err)
 			} else {
-				t.Logf("GetFreePort(%d, %d) = %d", tt.start, tt.end, got)
+				t.Logf("GetFreePortInRange(%d, %d) = %d", tt.start, tt.end, got)
 			}
 		})
 	}
